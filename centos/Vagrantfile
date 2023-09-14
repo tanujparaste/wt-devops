@@ -1,0 +1,13 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "eurolinux-vagrant/centos-stream-9"
+  config.vm.network "private_network", ip: "192.168.56.102"
+  config.vm.network "public_network"
+  config.vm.synced_folder "..\\..\\scripts\\shell-scripts", "/opt/scripts"
+  config.vbguest.auto_update = true
+  config.vm.provision "shell", inline: <<-SCRIPT
+    yum install -y httpd wget unzip git
+    mkdir /opt/devopsdir
+    free -m
+    uptime
+  SCRIPT
+end
